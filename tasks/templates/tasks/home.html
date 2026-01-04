@@ -1,0 +1,32 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<main class="container py-5">
+    <section class="card card-body" style="display: flex; justify-content: center; align-items: center;">
+        {% if user.is_authenticated %}
+            <h1 class="display-1">Django App</h1>
+            <div style="width: 70%;" class="mt-5 mb-5">
+                <p>
+                    <strong>ultimate task organizer to keep your day on track.</strong>
+                    Manage your tasks, plan your schedule, and boost your productivity with a fast, simple, and powerful platform.
+                    Customize your workflow, check off your to-dos, and reach your daily goals with ease
+                </p>
+            </div>
+            <div class="d-flex gap-3"> 
+                <a class="btn btn-primary" href="{% url 'create_tasks' %}">Crear Tarea</a>
+                <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesión</a>
+            </div>
+        {% else %}
+            <h1 class="display-1 text-center">Django App</h1>
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab ex rem et dolor pariatur ipsum ipsam officia illum, vitae sunt ratione, libero illo consectetur mollitia molestias voluptatibus vel odit asperiores!
+            </p>
+            <div class="d-flex gap-3"> 
+                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-primary" href="{% url 'signup' %}">Register</a>
+            </div>
+        {% endif %}
+        
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'tasks/base.html' %}
+{% load static %}
+{% block content %}
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="main__container mb-5">
+                <div class="mt-5 carta">
+                    <h1 class="mb-3">Task Detail</h1>
+                    <div style="background-color: #48e9; padding: 15px; border-radius: 6px; word-break: break-all;">
+                        <h2>{{task.title}}</h2>
+                        <p>Descripción: &nbsp;
+                        {{task.description}}</p>
+                        {% if task.is_important %}
+                            <strong style="margin-bottom: 15px; display: block;">IMPORTANTE</strong>
+                        {% endif %}
+                        <div class="options__container">
+                        {% if task.date_complete %}
+                            <span style="color: green; background-color: aliceblue; padding: 5px;
+                            border-radius: 5px;">COMPLETADA</span>
+                        {% else %}
+                            <span style="color: red; background-color: aliceblue; padding: 5px;border-radius: 5px;">INCOMPLETA</span>
+                            <form action="{% url 'task_complete' task.id %}" method="POST">
+                                {% csrf_token %}
+                                <button style="margin: 20px 0; word-wrap: break-word;">MARCAR COMO COMPLETADA</button>
+                            </form>
+                        {% endif %}
+
+                            <form action="{% url 'task_delete' task.id %}" method="POST">
+                                {% csrf_token %}
+                                <button style="margin: 5px 0;">ELIMINAR</button>
+                            </form>
+                            <button style="margin: 5px 0;" onclick="mostrar_formulario()" id="update__button">ACTUALIZAR</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <form method="POST" class="form">
+                    <h2>ACTUALIZAR TAREA</h2>
+                    <span style="color: red;">{{error}}</span>
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button>ACTUALIZAR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .form {
+        display: none;
+        margin: 35px 0;
+        border-radius: 6px;
+        background-color: rgb(252, 224, 186);
+        padding: 25px;
+        border: 2px solid #0003;
+    }
+
+    .carta {
+        display: flex; 
+        flex-direction: column;
+    }
+
+    .main__container {
+            flex-direction: row;
+            gap: 20px;
+        }
+
+    @media screen and (max-width:400px) {
+        .main__container {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .options__container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
